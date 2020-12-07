@@ -2,6 +2,7 @@ from flask import Flask, render_template, request,jsonify
 import requests
 import json
 import pymysql
+import time
 
 app = Flask(__name__)
 
@@ -38,19 +39,15 @@ def handle_request():
         data = result['search']
         print(result['yes_no'])
         sql = '%'+data+'%'
+        t1 = time.time()
         cursor.execute("select * from restaurant where `Phục vụ các món` LIKE '%Thịt Gà%'")
+        t2 = time.time()
+        print('take : '+str(t2-t1)+'s')
         ls = [x for x in cursor]
         # return render_template("index.html",data=data)
         data = dict(zip(tables, ls[0]))
         print(data)
-
-        thisdict = {
-        "brand": "Ford",
-        "model": "Mustang",
-        "year": 1964
-        }
-        # for key, value in data.items():
-
+        print(cursor.execute("EXPLAIN select * from restaurant where `Phục vụ các món` LIKE '%Thịt Gà%'"))
         # return data
         return render_template("result.html",data=data)
 if __name__ == "__main__":
