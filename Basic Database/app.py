@@ -36,7 +36,7 @@ def handle_request():
     if request.method == 'POST':
         result = request.form
         data = result['search']
-
+        print(result['yes_no'])
         sql = '%'+data+'%'
         cursor.execute("select * from restaurant where `Phục vụ các món` LIKE '%Thịt Gà%'")
         ls = [x for x in cursor]
