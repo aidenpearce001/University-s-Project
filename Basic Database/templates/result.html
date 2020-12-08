@@ -1,10 +1,10 @@
 <!doctype html>
 <html>
    <body>
-      {% for k,v in restaurant_name.items() %}
+      {% for k,v in data.items() %}
       <h1>{{ k }}</h1>
       <table border = 1>
-         {% for key, value in data.items() %}
+         {% for key, value in v.items() %}
             <tr>
                <th> {{ key }} </th>
                <td> {{ value }} </td>

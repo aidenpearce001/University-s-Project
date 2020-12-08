@@ -14,7 +14,11 @@ cursor.execute("DESCRIBE restaurant")
 all_table = [x for x in cursor]
 
 tables = [x[0] for x in all_table]
-tables
+
+images_map = {}
+with open('images_map','r',encoding='utf-8') as fd:
+    for i in fd:
+        images_map[i.split(":")[0]] = i.split(":")[-1].rstrip()
 
 @app.route("/", methods=['GET', 'POST'])
 def index():
@@ -38,14 +42,26 @@ def handle_request():
         result = request.form
         data = result['search']
         print(result['yes_no'])
-        sql = '%'+data+'%'
+
+        sql = "SELECT * FROM restaurant where "
+        for i in data.split(","):
+            sql += "( `Phục vụ các món` like " + "'%" +i + "%') AND " 
+
+        # str1 = ''.join(sql.split("AND")[:-1])
+        sql[:-5]
+        # sql = '%'+data+'%'
+        # cursor.execute("SELECT * FROM restaurant where ( `Phục vụ các món` like '%Thịt Gà%') AND (`Phục vụ các món` like '%Tôm%')")
         t1 = time.time()
-        cursor.execute("select * from restaurant where `Phục vụ các món` LIKE '%Thịt Gà%'")
+        cursor.execute(sql[:-5])
         t2 = time.time()
         print('take : '+str(t2-t1)+'s')
         ls = [x for x in cursor]
         # return render_template("index.html",data=data)
-        data = dict(zip(tables, ls[0]))
+        dict1 = dict(zip(tables, ls[:10]))
+        data = {}
+        for i,v in enumerate([v[1] for k,v in dict1.items()]):
+            data[v] = dict(zip(tables, ls[i]))
+        
         print(data)
         print(cursor.execute("EXPLAIN select * from restaurant where `Phục vụ các món` LIKE '%Thịt Gà%'"))
         # return data
