@@ -71,8 +71,8 @@ def handle_request():
         
         print(data)
         for k,v in data.items():
-            print(k)
-            # print(images_map[k])
+            # print(k)
+            print(images_map[k])
         print(cursor.execute("EXPLAIN select * from restaurant where `Phục vụ các món` LIKE '%Thịt Gà%'"))
         # return data
         return render_template("row-listings-filterstop-search-aside.html",data=data,images_map=images_map)
