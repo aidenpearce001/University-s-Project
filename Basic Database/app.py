@@ -22,7 +22,7 @@ with open('images_map','r',encoding='utf-8') as fd:
 
 @app.route("/", methods=['GET', 'POST'])
 def index():
-    return render_template("index.html")
+    return render_template("index-template.html")
     # if request.method == 'POST':
     #     result = request.form
     #     data = result['search']
@@ -38,10 +38,17 @@ def index():
 
 @app.route("/top10", methods=["GET", "POST"])
 def handle_request():
-    if request.method == 'POST':
-        result = request.form
-        data = result['search']
-        print(result['yes_no'])
+    # if request.method = "GET":
+    #result = request.form
+    #     pass
+    if request.args:
+        # language = request.args.get('food')
+        # print(language)
+        # return '''<h1>The language value is: {}</h1>'''.format(language)
+        # result = request.form
+        data = request.args.get('food')
+        # print(result['loc'])
+        # print(result['yes_no'])
 
         sql = "SELECT * FROM restaurant where "
         for i in data.split(","):
@@ -65,6 +72,6 @@ def handle_request():
         print(data)
         print(cursor.execute("EXPLAIN select * from restaurant where `Phục vụ các món` LIKE '%Thịt Gà%'"))
         # return data
-        return render_template("result.html",data=data)
+        return render_template("row-listings-filterstop-search-aside.html",data=data)
 if __name__ == "__main__":
     app.run(debug=True)
