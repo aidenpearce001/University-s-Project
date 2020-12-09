@@ -109,177 +109,36 @@
 		<div id="results">
 		   <div class="container">
 			   <div class="row">
-				   <div class="col-lg-3 col-md-4 col-10">
-					   <h4><strong>145</strong> result for All listing</h4>
-				   </div>
-				   <div class="col-lg-9 col-md-8 col-2">
-					   <a href="#0" class="side_panel btn_search_mobile"></a> <!-- /open search panel -->
-						<div class="row no-gutters custom-search-input-2 inner">
-							<div class="col-lg-5">
-								<div class="form-group">
-									<input class="form-control" type="text" placeholder="What are you looking for...">
-									<i class="icon_search"></i>
-								</div>
-							</div>
-							<div class="col-lg-3">
-								<div class="form-group">
-									<input class="form-control" type="text" placeholder="Where">
-									<i class="icon_pin_alt"></i>
-								</div>
-							</div>
-							<div class="col-lg-3">
-								<select class="wide">
-									<option>All Categories</option>	
-									<option>Shops</option>
-									<option>Hotels</option>
-									<option>Restaurants</option>
-									<option>Bars</option>
-									<option>Events</option>
-									<option>Fitness</option>
-								</select>
-							</div>
-							<div class="col-lg-1">
-								<input type="submit" value="Search">
-							</div>
-						</div>
-				   </div>
+					<h4><strong>Top 10 Nhà hàng chung toi recommend cho ban</strong> 
 			   </div>
 			   <!-- /row -->
 		   </div>
 		   <!-- /container -->
 	   	</div>
-	   	<!-- /results -->
-	   
-		<div class="filters_listing sticky_horizontal">
-			<div class="container">
-				<ul class="clearfix">
-					<li>
-						<div class="switch-field">
-							<input type="radio" id="all" name="listing_filter" value="all" checked>
-							<label for="all">All</label>
-							<input type="radio" id="popular" name="listing_filter" value="popular">
-							<label for="popular">Popular</label>
-							<input type="radio" id="latest" name="listing_filter" value="latest">
-							<label for="latest">Latest</label>
-						</div>
-					</li>
-					<li><a class="btn_filt" data-toggle="collapse" href="#filters" aria-expanded="false" aria-controls="filters" data-text-swap="Less filters" data-text-original="More filters">More filters</a></li>
-					<li>
-						<div class="layout_view">
-							<a href="listing-1.html"><i class="icon-th"></i></a>
-							<a href="#0" class="active"><i class="icon-th-list"></i></a>
-							<a href="list-map.html"><i class="icon-map"></i></a>
-						</div>
-					</li>
-					<li>
-						<a class="btn_map" data-toggle="collapse" href="#collapseMap" aria-expanded="false" aria-controls="collapseMap" data-text-swap="Hide map" data-text-original="View on map">View on map</a>
-					</li>
-				</ul>
-			</div>
-			<!-- /container -->
-		</div>
-		<!-- /filters -->
 		
-		<div class="collapse" id="collapseMap">
-			<div id="map" class="map"></div>
-		</div>
-		<!-- /Map -->
-		
-		<div class="collapse" id="filters">
-			<div class="container margin_30_5">
-				<div class="row">
-					<div class="col-md-4">
-						<h6>Rating</h6>
-						<ul>
-							<li>
-								<label class="container_check">Superb 9+ <small>245</small>
-								  <input type="checkbox">
-								  <span class="checkmark"></span>
-								</label>
-							</li>
-							<li>
-								<label class="container_check">Very Good 8+ <small>123</small>
-								  <input type="checkbox">
-								  <span class="checkmark"></span>
-								</label>
-							</li>
-							<li>
-								<label class="container_check">Good 7+ <small>32</small>
-								  <input type="checkbox">
-								  <span class="checkmark"></span>
-								</label>
-							</li>
-							<li>
-								<label class="container_check">Pleasant 6+ <small>12</small>
-								  <input type="checkbox">
-								  <span class="checkmark"></span>
-								</label>
-							</li>
-						</ul>
-					</div>
-					<div class="col-md-4">
-						<h6>Tags</h6>
-						<ul>
-							<li>
-								<label class="container_check">Wireless Internet <small>12</small>
-								  <input type="checkbox">
-								  <span class="checkmark"></span>
-								</label>
-							</li>
-							<li>
-								<label class="container_check">Smoking Allowed <small>11</small>
-								  <input type="checkbox">
-								  <span class="checkmark"></span>
-								</label>
-							</li>
-							<li>
-								<label class="container_check">Wheelchair Accesible <small>23</small>
-								  <input type="checkbox">
-								  <span class="checkmark"></span>
-								</label>
-							</li>
-							<li>
-								<label class="container_check">Parking <small>56</small>
-								  <input type="checkbox">
-								  <span class="checkmark"></span>
-								</label>
-							</li>
-						</ul>
-					</div>
-					<div class="col-md-4">
-						<div class="add_bottom_30">
-							<h6>Distance</h6>
-							<div class="distance"> Radius around selected destination <span></span> km</div>
-							<input type="range" min="10" max="100" step="10" value="30" data-orientation="horizontal">
-						</div>
-					</div>
-				</div>
-				<!-- /row -->
-			</div>
-		</div>
-		<!-- /Filters -->
-
 		<div class="container margin_60_35">
 			{% for k,v in data.items() %}	
 			<div class="strip list_view">
 				<div class="row no-gutters">
 					<div class="col-lg-5">
 						<figure>
-							<a href="detail-restaurant.html"><img src="img/location_1.jpg" class="img-fluid" alt=""><div class="read_more"><span>Read more</span></div></a>
-							<small>Bar</small>
+							<a href="#"><img src={{ images_map[k] }} class="img-fluid" alt=""><div class="read_more"><span>Read more</span></div></a>
+							<small>Nhà hàng</small>
 						</figure>
 					</div>
 					<div class="col-lg-7">
 						<div class="wrapper">
 							<a href="#0" class="wish_bt"></a>
-							<h3><a href="detail-restaurant.html">{{ k }}</a></h3>
-							<small>27 Old Gloucester St</small>
-							<p>Dicam diceret ut ius, no epicuri dissentiet philosophia vix. Id usu zril tacimates neglegentur. Eam id legimus torquatos cotidieque, usu decore percipitur definitiones ex, nihil utinam recusabo mel no.</p>
+							<h3><a href="#">{{ k }}</a></h3>
+							<small>địa điểm :{{ v['địa điểm'] }}</small><br>
+							<small>khoảng giá : {{ v['khoảng giá'] }}</small><br>
+							<small>Phục vụ các món: {{ v['Phục vụ các món'][1:-1].replace("'","") }}</small><br>
 							<a class="address" href="https://www.google.com/maps/dir//Assistance+%E2%80%93+H%C3%B4pitaux+De+Paris,+3+Avenue+Victoria,+75004+Paris,+Francia/@48.8606548,2.3348734,14z/data=!4m15!1m6!3m5!1s0x47e66e1de36f4147:0xb6615b4092e0351f!2sAssistance+Publique+-+H%C3%B4pitaux+de+Paris+(AP-HP)+-+Si%C3%A8ge!8m2!3d48.8568376!4d2.3504305!4m7!1m0!1m5!1m1!1s0x47e67031f8c20147:0xa6a9af76b1e2d899!2m2!1d2.3504327!2d48.8568361">Get directions</a>
 						</div>
 						<ul>
-							<li><span class="loc_open">Now Open</span></li>
-							<li><div class="score"><span>Superb<em>350 Reviews</em></span><strong>8.9</strong></div></li>
+							<li><span class="loc_closed">Now Open</span></li>
+							{% set item1,item2 = (((v['điểm chất lượng']|float+v['điểm không gian']|float+v['điểm giá cả']|float+v['điểm vị trí']|float)/4)|string).split(".") %}
+							<li><div class="score"><strong>{{ item1 }}.{{ item2[0] }}</strong></div></li>
 						</ul>
 					</div>
 				</div>
@@ -381,7 +240,7 @@
 								</select>
 							</div>
 						</li>
-						<li><img src="img/cards_all.svg" alt=""></li>
+						<li><img src="static/img/cards_all.svg" alt=""></li>
 					</ul>
 				</div>
 				<div class="col-lg-6">
@@ -449,15 +308,15 @@
 	<div id="toTop"></div><!-- Back to top button -->
 	
 	<!-- COMMON SCRIPTS -->
-    <script src="js/common_scripts.js"></script>
-	<script src="js/functions.js"></script>
-	<script src="assets/validate.js"></script>
+    <script src="static/js/common_scripts.js"></script>
+	<script src="static/js/functions.js"></script>
+	<script src="static/assets/validate.js"></script>
 	
 	<!-- Map -->
 	<script src="http://maps.googleapis.com/maps/api/js"></script>
-	<script src="js/markerclusterer.js"></script>
-	<script src="js/map.js"></script>
-	<script src="js/infobox.js"></script>
+	<script src="static/js/markerclusterer.js"></script>
+	<script src="static/js/map.js"></script>
+	<script src="static/js/infobox.js"></script>
   
 </body>
 </html>
