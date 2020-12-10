@@ -91,4 +91,4 @@ def handle_request():
         else:
             return render_template("row-listings-filterstop-search-aside.html",data=data,images_map=images_map)
 if __name__ == "__main__":
-    app.run(debug=True)
+    app.run(host='0.0.0.0',debug=True)
