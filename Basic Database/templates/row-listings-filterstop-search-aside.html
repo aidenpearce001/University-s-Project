@@ -122,7 +122,11 @@
 				<div class="row no-gutters">
 					<div class="col-lg-5">
 						<figure>
+							{% if images_map.get(k) == None %}
+							<a href="#"><img src="" class="img-fluid" alt=""><div class="read_more"><span>Read more</span></div></a>
+							{% else %}
 							<a href="#"><img src={{ images_map[k] }} class="img-fluid" alt=""><div class="read_more"><span>Read more</span></div></a>
+							{% endif %}
 							<small>Nhà hàng</small>
 						</figure>
 					</div>
