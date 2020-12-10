@@ -1,3 +1,5 @@
+# !/usr/bin/python
+# -*- encoding: utf-8 -*-
 from flask import Flask, render_template, request,jsonify
 import requests
 import json
@@ -47,19 +49,28 @@ def handle_request():
         # return '''<h1>The language value is: {}</h1>'''.format(language)
         # result = request.form
         data = request.args.get('food')
+        if request.args.get('loc'):
+            loc = request.args.get('loc')
+            print(loc)
+            loc_sql = " And ( `địa điểm` like '%{}%')".format(loc)
+        else:
+            loc_sql = ""
+
+        if request.args.get('style'):
+            style = request.args.get('style')
+            print(style)
+            style_sql = " And ( `Phong cách ẩm thực` like '%{}%')".format(style)
+        else:
+            style_sql = ""
         # print(result['loc'])
         # print(result['yes_no'])
 
         sql = "SELECT * FROM restaurant where "
         for i in data.split(","):
             sql += "( `Phục vụ các món` like " + "'%" +i + "%') AND " 
-
-        # str1 = ''.join(sql.split("AND")[:-1])
-        sql[:-5]
-        # sql = '%'+data+'%'
-        # cursor.execute("SELECT * FROM restaurant where ( `Phục vụ các món` like '%Thịt Gà%') AND (`Phục vụ các món` like '%Tôm%')")
+        sql = sql[:-5] + loc_sql + style_sql
         t1 = time.time()
-        cursor.execute(sql[:-5])
+        cursor.execute(sql)
         t2 = time.time()
         print('take : '+str(t2-t1)+'s')
         ls = [x for x in cursor]
@@ -68,13 +79,16 @@ def handle_request():
         data = {}
         for i,v in enumerate([v[1] for k,v in dict1.items()]):
             data[v] = dict(zip(tables, ls[i]))
-        
-        print(data)
-        for k,v in data.items():
-            # print(k)
-            print(images_map[k])
-        print(cursor.execute("EXPLAIN select * from restaurant where `Phục vụ các món` LIKE '%Thịt Gà%'"))
+
+        cursor.execute("EXPLAIN " +sql)
+        perform = cursor.fetchall()
+        for row in perform:
+            for colval in row:
+                print(colval)
         # return data
-        return render_template("row-listings-filterstop-search-aside.html",data=data,images_map=images_map)
+        if len(data) == 0:
+            return "Khong co gi dau cac em,cut di"
+        else:
+            return render_template("row-listings-filterstop-search-aside.html",data=data,images_map=images_map)
 if __name__ == "__main__":
     app.run(debug=True)
