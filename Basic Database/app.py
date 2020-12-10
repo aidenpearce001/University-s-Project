@@ -18,6 +18,8 @@ all_table = [x for x in cursor]
 tables = [x[0] for x in all_table]
 
 images_map = {}
+
+explain = ["id","select_type","table","type","possible_keys","key","key_len","ref","filtered","rows","Time","Extra"]
 with open('images_map','r',encoding='utf-8') as fd:
     for i in fd:
         images_map[i.split(":")[0]] = i.split(":")[-1].rstrip()
@@ -69,10 +71,8 @@ def handle_request():
         for i in data.split(","):
             sql += "( `Phục vụ các món` like " + "'%" +i + "%') AND " 
         sql = sql[:-5] + loc_sql + style_sql
-        t1 = time.time()
+        print(sql)
         cursor.execute(sql)
-        t2 = time.time()
-        print('take : '+str(t2-t1)+'s')
         ls = [x for x in cursor]
         # return render_template("index.html",data=data)
         dict1 = dict(zip(tables, ls[:10]))
@@ -80,14 +80,14 @@ def handle_request():
         for i,v in enumerate([v[1] for k,v in dict1.items()]):
             data[v] = dict(zip(tables, ls[i]))
 
-        cursor.execute("EXPLAIN " +sql)
+        cursor.execute("EXPLAIN "+sql)
         perform = cursor.fetchall()
-        for row in perform:
-            for colval in row:
-                print(colval)
+        for i in perform:
+            for _,k in enumerate(i):
+                print(explain[_]+" : "+str(k))
         # return data
         if len(data) == 0:
-            return "Khong co gi dau cac em,cut di"
+            return render_template("nothing.html")
         else:
             return render_template("row-listings-filterstop-search-aside.html",data=data,images_map=images_map)
 if __name__ == "__main__":
