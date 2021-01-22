@@ -9,7 +9,7 @@ import time
 app = Flask(__name__)
 
 db = pymysql.connect( host = '127.0.0.1',
-      user = 'root',passwd = '1234',database="restaurant")
+      user = 'root',passwd = 'abc123@#$',database="restaurant")
 cursor = db.cursor()
 
 cursor.execute("DESCRIBE restaurant")
@@ -64,14 +64,14 @@ def handle_request():
             style_sql = " And ( `Phong cách ẩm thực` like '%{}%')".format(style)
         else:
             style_sql = ""
-        # print(result['loc'])
-        # print(result['yes_no'])
-
-        sql = "SELECT * FROM restaurant where "
+        sql = "SELECT * FROM restaurant INNER JOIN rating ON restaurant.ID = rating.restaurant_id where "
+        sql_order = "SELECT * FROM restaurant INNER JOIN rating ON restaurant.ID = rating.restaurant_id WHERE ( `Phục vụ các món` like '%Cơm%') And ( `Phong cách ẩm thực` like '%Hàn%') ORDER BY avg"
         for i in data.split(","):
             sql += "( `Phục vụ các món` like " + "'%" +i + "%') AND " 
-        sql = sql[:-5] + loc_sql + style_sql
+        sql = sql[:-5] + loc_sql + style_sql + " ORDER BY avg DESC"
         print(sql)
+        # cursor.execute("SELECT restaurant_id FROM rating")
+        # print([x for x in cursor])
         cursor.execute(sql)
         ls = [x for x in cursor]
         # return render_template("index.html",data=data)
