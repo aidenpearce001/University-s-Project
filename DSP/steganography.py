@@ -51,7 +51,7 @@ def encode(sound_path, file_path, output_path, num_lsb):
     sound_steg.close()
     print("Output wav written".ljust(30) + f" in {time() - start:.2f}s")
 
-def recover_data(sound_path, output_path, num_lsb, bytes_to_recover):
+def decode(sound_path, output_path, num_lsb, bytes_to_recover):
     if sound_path is None:
         raise ValueError("WavSteg recovery requires an input sound file path")
     if output_path is None:
