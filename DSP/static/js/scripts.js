@@ -24,14 +24,39 @@
 // });
 
 $(function() {
-    $('#upload').click(function() {
+    $('#encode').click(function() {
     event.preventDefault();
     let form_data = new FormData($('#uploadform')[0]);
     form_data.append("filename", $("#filename").val())
     form_data.append("secret", $("#secret").val())
     form_data.append("method", $(this).val())
 
-    alert(form_data);
+    console.log($(this).val());
+    $.ajax({
+        type : "POST",
+        url : "/uploader",
+        contentType: false,
+        cache: false,
+        processData: false,
+        data: form_data,
+        success: function(data) {
+            // alert(val);
+            alert($("#secret").val());
+            console.log(data);
+            $('#texthere').html(data.encode);
+        }
+    })
+    })
+});
+
+$(function() {
+    $('#decode').click(function() {
+    event.preventDefault();
+    let form_data = new FormData($('#uploadform')[0]);
+    form_data.append("filename", $("#filename").val())
+    form_data.append("method", $(this).val())
+
+    console.log($(this).val());
     $.ajax({
         type : "POST",
         url : "/uploader",
@@ -42,10 +67,9 @@ $(function() {
         success: function(data) {
             // alert(val);
             console.log(data);
-            console.log($("#secret").val());
-            $('#texthere').html($("#secret").val());
+            $('#texthere').html(data.decode);
         }
-        });
+    })
     })
 });
 

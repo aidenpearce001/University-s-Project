@@ -1,4 +1,7 @@
 from bit_manipulation import lsb_deinterleave_bytes, lsb_interleave_bytes
+import wave
+from time import time
+import os
 
 def encode(sound_path, file_path, output_path, num_lsb):
     if sound_path is None:
@@ -65,7 +68,7 @@ def decode(sound_path, output_path, num_lsb, bytes_to_recover):
     sample_width = sound.getsampwidth()
     num_frames = sound.getnframes()
     sound_frames = sound.readframes(num_frames)
-    prnit("Files read".ljust(30) + f" in {time() - start:.2f}s")
+    print("Files read".ljust(30) + f" in {time() - start:.2f}s")
 
     if sample_width != 1 and sample_width != 2:
         # Python's wave module doesn't support higher sample widths
