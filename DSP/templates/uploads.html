@@ -35,17 +35,19 @@ Please upload only in ".wav" format.
         </div><!-- btn-orange -->
       </div><!-- col-3 -->
       <div class="col-sm-8">
-        <input type="text" class="form-control" name="" placeholder="Secret go here">
+        <input type="text" class="form-control" name="secret" placeholder="Secret go here">
       </div><!--col-8-->
+      <div class="col-sm-8">
+        <input type="text" class="form-control" name="lsb" placeholder="Number of lsb(default=2)">
+      </div>
       <div class="col-sm-1"><a class="btn-check"><i class="fa fa-times"></i></a></div><!-- col-1 -->
     </div><!--row-->
   </div><!--uploader-->
-  <button type="submit" class="btn btn-new"><i class="fa fa-lock"></i> My blog</button>
+  <button type="submit" name="method" value="encode" class="btn btn-new"><i class="fa fa-lock"></i> Encode</button>
+  <button type="submit" name="method" value="decode" class="btn btn-next"><i class="fa fa-unlock"></i> Decode</button>
 </form>   
 
 <div class="text-center">
-<a class="btn btn-new"><i class="fa fa-lock"></i> Encode</a>
-<a class="btn btn-next"><i class="fa fa-unlock"></i> Decode</a>
 </div>
 </div><!--one-->
 </div><!-- row -->

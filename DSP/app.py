@@ -4,7 +4,7 @@ import steganography
 import os
 
 app = Flask(__name__)
-UPLOAD_FOLDER = 'upload'
+UPLOAD_FOLDER = 'static'
 app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER 
 
 @app.route('/')
@@ -14,6 +14,9 @@ def upload_file():
 @app.route('/uploader', methods = ['GET', 'POST'])
 def process():
    if request.method == 'POST':
+      data = {}
+
+      print(request.form)
       print("receive")
       f = request.files['file']
       print(f.filename)
@@ -21,36 +24,33 @@ def process():
             filename = secure_filename(f.filename)
             f.save(os.path.join(app.config['UPLOAD_FOLDER'],filename))
 
-      return f.filename
-      # data = {
-      #       "method" : request.form['method'],
-      # }
+      lsb = request.form['lsb'] 
+      if request.form['lsb'] == "":
+         lsb = 2
 
-      # print(request.form)
-      # f = request.files['file']
-      # if f:
-      #       filename = secure_filename(f.filename)
-      #       f.save(os.path.join(app.config['UPLOAD_FOLDER'],filename))
+      if request.form['method'] == 'encode':
+         with open("secret.txt","w") as f:
+            f.write(request.form['secret'])
+         status, num_lsb, max_bytes_to_hide, file_size, hide_time = steganography.encode(os.path.join(app.config['UPLOAD_FOLDER'],filename),"secret.txt",os.path.join(app.config['UPLOAD_FOLDER'],"secret.wav"),lsb)
+         data['status'] = status
+         data['number of lsb'] = num_lsb
+         data['Total bytes can hide'] = str(max_bytes_to_hide) + " bytes"
+         data['Total'] = str(file_size) + " bytes hidden" + hide_time
 
-      # if request.form['method'] == 'encode':
-      #    with open("secret.txt","w") as f:
-      #       f.write(request.form['secret'])
-      #    steganography.encode(os.path.join(app.config['UPLOAD_FOLDER'],filename),"secret.txt",os.path.join(app.config['UPLOAD_FOLDER'],"secret.wav"),2)
+      elif request.form['method'] == 'decode':
+         status, bytes_to_recover, rec_time = steganography.decode(os.path.join(app.config['UPLOAD_FOLDER'],filename),"output.txt",lsb,1000)
+         f = open("output.txt",'r+')
+         # print(f.read())
+         secret = f.read().rstrip('\x00')
+         print({'decode' : 'secret is '+ str(f.read())})
 
-      #    os.remove("secret.txt")
+         data['status'] = status
+         data['recover'] = str(bytes_to_recover) + rec_time 
+         data['The Secret is'] = secret
 
-      #    return jsonify({'encode' : 'encrypted'})
-
-      # elif request.form['method'] == 'decode':
-      #    steganography.decode(os.path.join(app.config['UPLOAD_FOLDER'],filename),"output.txt",2,1000)
-      #    f = open("output.txt",'r+')
-      #    # print(f.read())
-      #    secret = f.read().rstrip('\x00')
-      #    print({'decode' : 'secret is '+ str(f.read())})
-      #    return jsonify({'decode' : 'secret is '+ secret})
-
-      #    os.remove("output.txt")
-		
+   print(data)
+   print(filename)
+   return render_template('audio.html',data = data, audiofile= filename)
 
 if __name__ == '__main__':
    app.run(port=45000,debug = True)
