@@ -24,7 +24,7 @@ def process():
             filename = secure_filename(f.filename)
             f.save(os.path.join(app.config['UPLOAD_FOLDER'],filename))
 
-      lsb = request.form['lsb'] 
+      lsb = int(request.form['lsb'])
       if request.form['lsb'] == "":
          lsb = 2
 
